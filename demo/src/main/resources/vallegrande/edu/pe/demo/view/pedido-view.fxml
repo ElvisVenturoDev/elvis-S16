@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="vallegrande.edu.pe.demo.controller.PedidoController"
+            prefWidth="1120.0" prefHeight="740.0"
+            stylesheets="@estilos.css">
+
+    <top>
+        <VBox styleClass="encabezado" spacing="4.0">
+            <padding>
+                <Insets top="18.0" right="24.0" bottom="18.0" left="24.0"/>
+            </padding>
+            <Label text="Sistema de Pedidos de Imprenta" styleClass="titulo"/>
+            <Label text="Registro, consulta, actualización y eliminación de pedidos — JavaFX + MySQL"
+                   styleClass="subtitulo"/>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="14.0">
+            <padding>
+                <Insets top="18.0" right="24.0" bottom="18.0" left="24.0"/>
+            </padding>
+
+            <GridPane hgap="14.0" vgap="10.0" styleClass="panel-formulario">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="90.0" prefWidth="110.0"/>
+                    <ColumnConstraints hgrow="ALWAYS" prefWidth="320.0"/>
+                    <ColumnConstraints minWidth="110.0" prefWidth="130.0"/>
+                    <ColumnConstraints hgrow="ALWAYS" prefWidth="240.0"/>
+                </columnConstraints>
+
+                <Label text="ID pedido" styleClass="etiqueta" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtId" promptText="Automático" editable="false"
+                           styleClass="campo-bloqueado"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Cliente" styleClass="etiqueta" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextField fx:id="txtCliente" promptText="Nombre del cliente"
+                           GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                <Label text="Tipo de trabajo" styleClass="etiqueta" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtTrabajo" promptText="Ej. Volantes, banners, libros"
+                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Cantidad" styleClass="etiqueta" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <TextField fx:id="txtCantidad" promptText="Ej. 500"
+                           GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                <Label text="Formato" styleClass="etiqueta" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbFormato" promptText="Seleccione formato" maxWidth="Infinity"
+                          GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Fecha pedido" styleClass="etiqueta" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <DatePicker fx:id="dpFechaPedido" maxWidth="Infinity"
+                            GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+                <Label text="Fecha entrega" styleClass="etiqueta" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dpFechaEntrega" maxWidth="Infinity"
+                            GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Estado" styleClass="etiqueta" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                <ComboBox fx:id="cmbEstado" promptText="Seleccione estado" maxWidth="Infinity"
+                          GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+            </GridPane>
+
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                <Button text="Registrar" onAction="#onRegistrar" styleClass="btn, btn-primario"/>
+                <Button text="Actualizar" onAction="#onActualizar" styleClass="btn, btn-secundario"/>
+                <Button fx:id="btnEliminar" text="Eliminar" onAction="#onEliminar" styleClass="btn, btn-peligro"/>
+                <Button text="Limpiar" onAction="#onLimpiar" styleClass="btn, btn-neutro"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Label text="Buscar:" styleClass="etiqueta"/>
+                <TextField fx:id="txtBuscar" promptText="Cliente, trabajo o estado" prefWidth="230.0"/>
+                <Button text="Buscar" onAction="#onBuscar" styleClass="btn, btn-secundario"/>
+                <Button text="Ver todos" onAction="#onMostrarTodos" styleClass="btn, btn-neutro"/>
+            </HBox>
+
+            <Separator/>
+
+            <TableView fx:id="tablaPedidos" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn text="ID" prefWidth="60.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="idPedido"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Cliente" prefWidth="190.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="nombreCliente"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Tipo de trabajo" prefWidth="170.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="tipoTrabajo"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Cantidad" prefWidth="85.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="cantidad"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Formato" prefWidth="110.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="formato"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Fecha pedido" prefWidth="120.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="fechaPedido"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Fecha entrega" prefWidth="120.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="fechaEntrega"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Estado" prefWidth="110.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="estado"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+
+            <Label fx:id="lblMensaje" styleClass="mensaje-ok" text=""/>
+        </VBox>
+    </center>
+</BorderPane>
